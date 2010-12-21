@@ -1,4 +1,4 @@
-/*Need to check if hide and show are being used on character or item*/
+/*Ernesto, Need to check if hide and show are being used on character or item*/
 
 item the_greatest_sword_ever {(int damage = 100000000)}
 item rubberDuckie {(string squeak = "squeak")}

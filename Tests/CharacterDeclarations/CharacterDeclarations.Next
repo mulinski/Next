@@ -1,4 +1,4 @@
-/*Testing upper case to lower case acceptance and differentiation. Forms of declaration of Characters */
+/*Ernesto, Testing upper case to lower case acceptance and differentiation. Forms of declaration of Characters */
 
 item the_greatest_sword_ever {()}
 item rubberDuckie {(string squeak = "squeak")}

@@ -1,3 +1,4 @@
+#Danny
 #!/usr/bin/perl -w
 
 use File::Compare;

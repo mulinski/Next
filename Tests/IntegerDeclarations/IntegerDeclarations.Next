@@ -1,4 +1,4 @@
-/* Forms of declaration of ints */
+/* Ernesto, Forms of declaration of ints */
 location here {(int sizex = 10000, int sizey=9283), (), ()}
 int x;
 int y = x;

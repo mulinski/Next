@@ -1,4 +1,4 @@
-/*Checks if kill removes from all lists*/
+/*Ernesto,Checks if kill removes from all lists*/
 
 item nothingItem {()}
 item the_greatest_sword_ever {(int damage = 100000000)}

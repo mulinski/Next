@@ -1,3 +1,4 @@
+(* Pri: Danny, Sec: Morgan *)
 open Ast
 open Checktype
 open Check

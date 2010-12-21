@@ -1,4 +1,4 @@
-/*Testing naming conventions. Forms of declaration of Locations */
+/*Ernesto, Testing naming conventions. Forms of declaration of Locations */
 
 item the_greatest_sword_ever {()}
 item rubberDuckie {(string squeak = "squeak")}
