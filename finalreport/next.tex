@@ -1,5 +1,7 @@
 \documentclass[12pt]{article}
 
+\usepackage{graphicx}
+
 \makeatletter
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
   {-3.25ex\@plus -1ex \@minus -.2ex}%
@@ -19,7 +21,67 @@
 \tableofcontents
 
 \section{Introduction}
+The Next programming language provides a way to easily create text-based computer games.  Users of the language can specify characters, locations and items that will appear in the game, and they can design the general plot of the game that ties these together.  This language is ideal for creating text-based RPGs (or digital ``choose your own adventure" stories), but it can also be used to design other types of games.
+
+\subsection{Language Elements}
+
+\subsubsection{Declarations}
+The program is primarily structured around declarations.  The user will create declarations for characters, locations, items, missions, and attributes.
+
+\paragraph{Characters}
+Characters can appear in locations throughout the game.  A declaration for a character will provide the character's name and valid interactions for this character, such as \textit{attack} or \textit{converse}.
+
+\paragraph{Locations}
+Locations provide a basic map of the game's landscape.  These are the ``rooms" in which a game player can find characters to interact with, items to pick up, or options for actions.  Locations can be nested; for instance, one might want to declare a location ``castle" with nested sub-locations ``dungeon" or ``tower."  The game player moves through locations during the game, and is presented with a list of options at each of these locations.  This serves also to define the basic plot of the game.  Within each location declaration, the possible actions are listed, as well as the result of taking these actions.  Results for action can include moving into a different location, changing attribute values for characters, or displaying new text on the screen.  It is possible to attach probabilities to each possible result of an action, to incorporate some randomness into the game.
+
+One location needs to be specified as the ``starting'' location for the game; this defines where all game play will begin.
+
+\paragraph{Actions}
+Actions can serve to move the character from location to location, or they can provide the ways to interact with other characters and items in the game.  For instance, there could be actions to move, attack, defend, pick up objects, or talk with other characters.  Creating actions for different directions in the game (\textit{up}, \textit{down}, \textit{left}, and \textit{right}) will allow programmers to create games beyond a basic RPG and into the realm of fighting games or driving games.
+
+\paragraph{Items}
+Items are objects that the game player can pick up and maintain in their inventory.  Collecting items can be requirements for missions, or possessing an item might improve a certain attribute such as strength or speed.
+
+\paragraph{Missions}
+A mission is a collection of requirements.  When all requirements in the mission declaration are completed, the game player earns a completion of the mission.  The requirements can include collecting items, visiting locations, performing certain actions, or meeting certain characters.  Missions can then be used as a way to define when the game level should increase.
+
+\paragraph{Attributes}
+Attributes are characteristics such as strength or speed, which each character in the game possesses, including the main player.  Attributes can vary throughout the game, and may be used in conditional statements in a ``location'' declaration to define what the result of an action should be.  For instance, if an attribute ``strength" is high, a user may want to define a higher probability of successfully defeating an enemy.
+
+\subsubsection{Levels}
+Our language will also provide a way to handle levels of a game, if desired.  The user will be able to decide whether they want to use levels in their game, and what criteria to use for ``leveling up."  Examples for level-up criteria could be thresholds for number of missions completed, number of locations visited, number of characters interacted with, etc.  Attributes such as strength or speed can be enhanced when a player passes a level, to provide some incentive.
+
+\subsubsection{Basic Math}
+Our language will need to provide the tools for performing basic math, such as addition, subtraction, and boolean operations.  These will be needed to handle increasing the level, updating the numerical features of attributes, or examining features of attributes for conditional results for actions.
+
 \section{Language Tutorial}
+\subsection{Tutorial 1}
+In this section we will create a simple program in the Next programming language that outputs “Hello world”. Keep in mind that in this step by step each line individually explained is part of a single program. The Next programming language can be thought of as a language made up of declarations.  A programmer can declare a number or a string. We will begin by declaring an integer and setting its value to 0:\begin{verbatim}    int num = 0;\end{verbatim}We will then declare a string:\begin{verbatim}    string announce = “Not in the world”;
+\end{verbatim} In Next we can also declare items, characters and locations. Here we will declare a character and a location.  What follows is a character declaration. The first parenthesis contains the character’s attributes while the second contains the items the character is carrying. We will leave the second parenthesis empty because our character is not carrying anything:\begin{verbatim}    character  you {(string slogan = “Hello world!”),()}\end{verbatim}What follows is a location declaration. The first parenthesis contains the location’s attributes, the second contains the items the location contains and the third the characters the location contains. We will leave the first two empty and only include a character in the location declaration. This code looks as follows:\begin{verbatim}    location here  {(),(),(you)}\end{verbatim}There is a special type of declaration in next in which we declare an event to start. Once a location has been declared, a start declaration must be made for that location. In order to use a location in conjunction with a start statement the location must be declared first. In order to use a character in a location that character must be declared first. In order to use an item in a character or a location the item must be declared first. This is why in the Next language it is a good programming practice to create all of the item, character and location declarations first and in that order followed by the start declarations. The start declarations must contain the programming logic for each location because aside from other declarations Next does not allow statements to be placed outside of a start declaration. The start location we will use for this program looks as follows:\begin{verbatim}    start here end (num == 1) {        if (exists here.you) then        output you.slogan;        else        output announce;        num = 1;	    }  \end{verbatim}This start declaration starts the here location and specifies that it will end when integer num is equal to 1.  The expression \begin{verbatim}    if (exist here.you)  then\end{verbatim} means if character you exists in location here then execute the code that follows. In this case if true then the slogan attribute from the you character is output with the line\begin{verbatim}    output you.slogan; \end{verbatim}Else the string announce is output. To finish execution of the here start statement integer num is set equal to 1 to meet the end condition. If this had not been done the start statement would iterate forever over its body of code. Because you exists in location here the program will output “Hello World!” Here is the complete program:\begin{verbatim}    int num = 0;    string announce = "not in the world:";    character you {(string slogan = "Hello world!"),()}    location here {(),(),(you)}    start here end (num == 1) {        if (exists here.you) then        output you.slogan;        else        output announce;        num = 1;    }
+\end{verbatim}
+
+\subsection{Compiling and Running a Next Program}Once you have created a next program save it with a .next file extension. Go to where the Next file is located. Use the Next file and your .next extension file as input and output the results into a file called Next.java. The command to do this would look like this\begin{verbatim}    	$ ./Next < Tutorial1.next > Next.java\end{verbatim}In this example the Next source code file is Tutorial1.next which is located in the same folder as the Next file. This outputs a java file which can then be compiled and executed as any other java source code file. For example to compile the file you could use the command\begin{verbatim}    	$ javac Next.java\end{verbatim}Then to run the file you could use\begin{verbatim}    	$ java Next
+\end{verbatim}
+
+\subsection{Tutorial 2}
+This tutorial assumes Tutorial 1 has been reviewed by the reader. In this tutorial we will make use of some of the more interesting features included in the Next language. The program that follows will utilize a probability statement to non-deterministically execute segments of code and we will use a choose statement to take simple keyboard input from the user and execute commands accordingly.  The commands will make an item show or hide(disappear) from a location and make a character drop or grab an item from a location if the conditions are right or output the automatic error message if it is not possible to perform the action.
+	We will begin by creating an integer, a location and a character.  Because no value will be given to the integer it will take the Next default value of 0. The location and character declarations will be created with empty lists which means that they will not have attributes, items or in the case of the location, characters. Those declarations look as follows:
+\begin{verbatim}    int num;    character person {(),()}    location here {(),(),()}\end{verbatim}We will then declare an item. Items can only have attributes and in this case we will also leave this item’s attribute list empty. The declaration looks as follows:\begin{verbatim}    item object {()}\end{verbatim}Next we will declare a start statement, very much like we did in the last example:\begin{verbatim}    start here end (num == 1) {
+\end{verbatim}Inside this start declaration we will begin by putting a probability statement. Probability statements begin with “[?” which in Next is known as an opening probability bracket.  Probability statements end with a closing probability bracket which looks like this “?]”. Inside the probability statement code that is executed with a given probability is defined with the notation   prob number statement   where number is an integer that specifies the probability that the statement code will be executed. The probability statement can have many such prob number statement clusters. One of them is chosen from inside the probability statement according to the number part which specifies the probability of that cluster.  It is important to remember that the sum of all the integers defined by the number part of the cluster must equal 100. The probability statement used for this program looks as follows:\begin{verbatim}    [?         		prob 50 output "This is line 1 of a possible 2";        		prob 50 output "This is line 2 of a possible 2";    	?]\end{verbatim}This probability statement means that with a 50 percent probability the line "This is line 1 of a possible 2" will be output. If that line is not output then  "This is line 2 of a possible 2" will be output (which, of course, means the second line also has a 50 percent probability of occurring as specified in the probability statement).
+	Following the probability statement we use two if statements. The first one checks if the item object exists in the person character. It outputs a message that notifies if it does or not. The second if statement checks if the item object exists in location here and again outputs a message that notifies the result. The code looks like this:
+\begin{verbatim}    	if (exists person.object) then    	    	output "The person has the object";    	else    	    	output "The person does not have the object";    	if(exists here.object) then    	    	output "The object is in the location";    	else     	    	output "The object is not in the location";
+\end{verbatim}	These if statements become useful to easily see the results of the choose statement that follows. A choose statement contains lists of three elements that specify a variable name, a string that will assist in output and a letter that becomes mapped to the keyboard.  The first list of the choose statement in this program looks as follows:\begin{verbatim}	    	(grabItem, "character grab item", "g")\end{verbatim}This means that when the choose statement is executed the output “Press g for character grab item” will be presented to the user. The g keyboard key will be mapped and if the user presses the g key followed by the enter key the code associated with the grabItem variable will be executed. These associations occur through the use of “when” statements which will soon be explained. An arbitrary amount of lists for action/keyboard mappings may be used in a choose statement. The choose statement and its lists used in this example are as follows:\begin{verbatim}    	choose (grabItem, "character grab item", "g")    	    	(dropItem, "character drop item", "d")    	    	(showItem, "show item in location", "s")    	    	(hideItem, "hide item from location", "h")    	    	(exit, "exit", "e")
+\end{verbatim}The lists for a choose statement for action/keyboard bindings are followed by a series of “when” statements enclosed by braces. These “when” statements specify code to be executed for each action. At the end of the code specified for each “when” statement a “next” statement is used that specifies a location to be executed next. The first when statement in this example is:\begin{verbatim}    	when grabItem    	    	grab person.object;    	next here \end{verbatim}This means that when the grabItem action is specified (in this example by the user choosing the g key on the keyboard) the character person will grab the item object if object is present in the current location.   This means that if the item object is present in the location “grab” will cause object to be removed from the location and added to the list of the character’s items. If the item is not present in the location when grab is used an error message is output and execution continues with no changes to the character or the location. Once “grab” is executed in the above “when” statement the next statement sends execution to the beginning of the here location. 
+
+    	The when statement that follows in our example is:\begin{verbatim}    when dropItem        drop person.object;   	next here\end{verbatim}In this case the “drop” action is used to have the person character drop the object item in the current location. “drop” removes an item from a character’s item list if the character has that item and adds it to a location’s item list. If the character does not have that item an error message is output and execution continues. 
+		After that the following two when statements follow:	\begin{verbatim}    	when showItem    	    	show here.object;    	next here    	when hideItem    	    	hide here.object;    	next here
+	\end{verbatim}“show” and “hide” statements are used to add or remove an item or character from a location. In this case the item object is added to the here location by using the “show” keyword or removed by using the “hide” keyword. “show”, “hide”, “drop” and “grab” are used in conjunction with “exists” to create connections between items, locations and characters in Next programs to simulate real world relationships when creating games.
+		Finally the last “when” statement is used to end execution of location here by making its end condition true.  The entire program can be seen bellow.
+	\begin{verbatim}    int num;    character person {(),()}    location here {(),(),()}    item object {()}    start here end (num == 1) {	        	[?     	    	    prob 50 output "This is line 1 of a possible 2";    	    	    prob 50 output "This is line 2 of a possible 2";        	?]    	if (exists person.object) then    	    	output "The person has the object";    	else    	    	output "The person does not have the object";    	if(exists here.object) then    	    	output "The object is in the location";
+    	else     	    	output "The object is not in the location";	    	choose (grabItem, "character grab item", "g")    	    	(dropItem, "character drop item", "d")    	    	(showItem, "show item in location", "s")    	    	(hideItem, "hide item from location", "h")    	    	(exit, "exit", "e")    	{        		when grabItem    	        		grab person.object;        	next here    	    	when dropItem    	    	    	drop person.object;    	    	next here    	    	when showItem    	    	    	show here.object;    	    	next here    	    	when hideItem    	    	    	hide here.object;    	    	next here    	    	when exit    	    	    	num = 1;    	    	next here    	}    }
+
+\end{verbatim}
+
 \section{Language Manual}
 
 \subsection{Introduction}
@@ -86,7 +148,7 @@ Keywords identify statement constructs and specify basic types.  Keywords cannot
 \noindent Keywords are used:
 \begin{itemize}
 \item To specify a data type (\texttt{character, location, item, int, string})
-\item As part of a statement (\texttt{if, then, else, start, end, when, choose, kill, grab, hide, drop, output, next, show}) 
+\item As part of a statement or start function (\texttt{if, then, else, start, end, when, choose, kill, grab, hide, drop, output, next, show}) 
 \item As operators on expressions (\texttt{and, or, exists, not})
 \end{itemize}
 
@@ -159,7 +221,7 @@ Strings are sequences of zero or more characters.  String literals are character
 
 \noindent Integers are used to represent whole numbers.  Next does not support floating point numbers.  Integers are specified by a sequence of decimal digits.  The value of the integer is computed in base 10.
 
-\section{Basic Concepts}
+\subsection{Basic Concepts}
 
 \subsubsection{Blocks and Compound Statements}
 A block is a section of code consisting of a sequence of statements.  A compound statement is a block surrounded by brackets \texttt{\{ \}}. \\
@@ -256,6 +318,7 @@ Each of the complex types in Next (\texttt{item, character}, and \texttt{locatio
 \item \texttt{primitive\_declaration\_list} stands in for a list of attribute declarations in the form \texttt{(declaration\_1, declaration\_2, ... declaration\_n)}, and each \texttt{declaration} is in the form described above in the description of primitive types.  These represent the attributes (and values for those attributes) for a given item, character, or location.
 \item \texttt{item\_list} and \texttt{character\_list} stand in for lists of item and character variable names, respectively, in the form \texttt{(name\_1, name\_2, ... name\_n)}.  These represent the list of items a character is carrying or are found in a location, and the characters that are physically in a location.
 \item Empty lists are permitted in place of any \texttt{primitive\_declaration\_list}, \texttt{item\_list} or \texttt{character\_list}, to indicate that there are none of that type of member variable.
+\item All objects used within an \texttt{item\_list} or \texttt{character\_list} must have been declared earlier in the program.
 \end{itemize}
 
 \subsection{Expressions and Operators}
@@ -435,7 +498,7 @@ The equality operators in Next, equal (\texttt{==}) and not-equal (\texttt{!=}),
 
 \texttt{a == b} \\
 
-\noindent  Both operands must have an arithmetic type.
+\noindent  The operands must be type \texttt{int} or type \texttt{string}, and they must be of identical type. 
 
 \paragraph{Logical Operators}
 The logical operators are \texttt{and} and \texttt{or}.  These operators have left-to-right evaluation.  The resulting integer literal is either 0 (false) or 1 (true).  Both operators must have scalar types.  If the compiler can make an evaluation by examining only the left operand, the right operand is not evaluated. \\
@@ -451,7 +514,7 @@ The logical operators are \texttt{and} and \texttt{or}.  These operators have le
 \texttt{E1 or E2}
 
 \subsubsection{Assignment Operator}
-There is only one assignment operator (\texttt{=}) in Next.  An assignment results in the value of the target variable after the assignment.  It can be used as subexpressions in larger expressions.  Outside of the declaration section, assignment operators can only operate on attributes in Next; these are integer and string literals.  Assignment expressions have two operands: a modifiable value on the left and an expression on the right.  In the following assignment: \\
+There is only one assignment operator (\texttt{=}) in Next.  An assignment results in the value of the target variable after the assignment.  It can be used as subexpressions in larger expressions.  Outside of the declaration section, assignment operators can only operate on primitive types; these are integer and string literals.  Assignment expressions have two operands: a modifiable value on the left and an expression on the right.  In the following assignment: \\
 
 \texttt{E1 = E2;} \\
 
@@ -468,7 +531,7 @@ A compound statement, or block, allows a sequence of statements to be treated as
 
 \noindent \texttt{\{ \\
 \indent fred.speed = 5; \\
-\indent if (fred.strength $>$ enemy.strength) \\
+\indent if (fred.strength $>$ enemy.strength) then\\
 \indent \{ \\
 \indent \indent enemy.health = enemy.health - 10;  \\
 \indent \} \\
@@ -557,22 +620,7 @@ A probability statement executes a statement randomly according to the given pro
 \indent \texttt{[? prob 40 count = count-1;} \\
 \indent \indent \texttt{   prob 60 count = count+1; ?]}
 
-\subsubsection{Iteration (start) Statements}
 
-Iteration statements in Next begin with the \texttt{start} keyword.  The statements inside the following block are executed until an end condition is met.  The end condition must have a scalar type.  An iteration statement is specified by the location in which the action occurs and an end condition that clarifies when gameplay should stop. \\
-
-\noindent The syntax of a \texttt{start} statement is as follows: \\
-
-\texttt{start location\_identifier end (expression)} \\
-\indent \indent \texttt{statement} \\
-
-\noindent where \texttt{location\_identifier} is the identifier representing the location, and \texttt{expression} represents the end condition.  For example: \\
-
-\texttt{start myplace end (junior.life < 1)} \\
-\indent \texttt{\{} \\
-\indent \indent \texttt{junior.life = junior.life - 1;} \\
-\indent \indent \texttt{output "You have reached the mountains of myplace!";} \\
-\indent \texttt{\}}
 
 \subsubsection{Gameplay Statements}
 \paragraph{Grab and Drop}
@@ -589,7 +637,7 @@ The statements:\\
 \texttt{hide y.x;} \\
 \indent \texttt{show y.x;} \\
 
-\noindent operate on the item or character \texttt{x} within the location or character inventory \texttt{y}.  The \texttt{hide} statement removes \texttt{x} from \texttt{y}, and the \texttt{show} statement adds \texttt{x} to \texttt{y}.  The object \texttt{y} must be a \texttt{location} or \texttt{character}.  If \texttt{y} is a \texttt{location}, \texttt{x} must be an \texttt{item} or \texttt{character}; if \texttt{y} is a \texttt{character}, \texttt{x} must be an \texttt{item}.
+\noindent operate on the item or character \texttt{x} within the location \texttt{y}.  The \texttt{hide} statement removes \texttt{x} from \texttt{y}, and the \texttt{show} statement adds \texttt{x} to \texttt{y}.  The object \texttt{y} must be a \texttt{location}.  The object \texttt{x} must be an \texttt{item} or \texttt{character}.
 
 \paragraph{Output}
 The statement: \\
@@ -612,6 +660,154 @@ The statement: \\
 
 \noindent moves the main character from the current location to location \texttt{l}.  Code continues execution at the beginning of the \texttt{start} statement marked with identifier \texttt{l}.
 
+\subsection{Start Statements}
+
+Start statements are where iteration takes place in Next.  They begin with the \texttt{start} keyword.  The statements inside the following block are executed until an end condition is met.  The end condition must have a scalar type.  An iteration statement is specified by the location in which the action occurs and an end condition that clarifies when gameplay should stop.  Every location that is declared in the declarations section must have a corresponding start statement somewhere in the following code.\\
+
+\noindent The syntax of a \texttt{start} statement is as follows: \\
+
+\texttt{start location\_identifier end (expression)} \\
+\indent \indent \texttt{statement} \\
+
+\noindent where \texttt{location\_identifier} is the identifier representing the location, and \texttt{expression} represents the end condition.  For example: \\
+
+\texttt{start myplace end (junior.life < 1)} \\
+\indent \texttt{\{} \\
+\indent \indent \texttt{junior.life = junior.life - 1;} \\
+\indent \indent \texttt{output "You have reached the mountains of myplace!";} \\
+\indent \texttt{\}}
+
+
+\subsection{Example Program}
+\begin{verbatim}
+int count;
+
+item the_greatest_sword_ever {(int damage = 100000000)}
+
+character xiaowei_the_greatest_man_ever {(int life = 100000000,
+int level=99999, string haha="hahahahaha"), (the_greatest_sword_ever)}
+
+location where_is_this_place {(int sizex = 10000, int sizey=9283), (),
+(xiaowei_the_greatest_man_ever)}
+
+start where_is_this_place end (xiaowei_the_greatest_man_ever.life < 0) {
+    	choose (attack,"hia!","a") (up,"up","u") (fin, "end", "f") {
+    	    	when attack
+    	    	{
+    	   	    	xiaowei_the_greatest_man_ever.life+1;
+
+   	       } next where_is_this_place
+		
+    	    	when up
+     	    	{
+    	    	    	[? prob 40 {
+    	    	    	    	count = count-1;
+   	    	    	    	output "count:";
+    	    	    	    	output count;
+    	    	    	}
+    	    	    	prob 60 {
+    	    	    	    	count = count+1;
+    	    	    	    	output "count:";
+    	    	    	    	output count;
+    	    	    	}
+     	    	    	?]
+    	    	} next where_is_this_place
+	
+    	    	when fin
+    	    	{
+    	    	    	xiaowei_the_greatest_man_ever.life = -1;
+    	    	} next where_is_this_place
+		
+		
+    	}
+}
+\end{verbatim}
+
+\section{Project Plan}
+\subsection{Process}
+We started work on our language by brainstorming what sort of features we wanted it to include, and sketching out mini programs of the kind we wanted our language to support.  We filled up many sheets of notebook paper with ideas for the syntax and structure of our programs.  As these ideas solidified, we began to create our parser, scanner, and AST, and develop the Language Reference Manual.  The discussion while writing the code for the parser and scanner, while cross-referencing with the LRM, fine-tuned many of the details of our language.
+
+After the parser and scanner were complete, we made the decision to make our  we divided the work to create the translator into different sections for each person to work on.   Each person was responsible for the code for certain elements of the language, for example expressions, declarations, and the various types of statements.
+
+As the translator code neared completion, we also began work on the testing of our program.  We created many small unit tests to test the features of our language, and running these allowed us to see what was and wasn't working properly in our code.  As we tested, sometimes implementation details needed to be changed, and we discussed these in the group before changing them.
+
+Throughout the work on our project, we had biweekly meetings to make sure everyone was on the same page and work through issues that required whole-group input.
+
+\subsection{Programming Style Guide}
+For our OCaml style guide, we referred to the style guide used in programming classes at Cornell, which is described at: \\
+http://www.cs.cornell.edu/courses/cs3110/2009fa/handouts/style.htm
+
+\subsection{Project timeline}
+We kept a calendar to keep track of the important dates for this project. \\
+
+9/20: Begin biweekly meetings.
+
+9/29: Project proposal submitted.
+
+10/5: Received feedback on proposal, began work on parser/scanner/AST.
+
+11/3: Parser, scanner, AST, and Language Reference Manual complete.
+
+12/1: Ocaml code complete, begin testing and debugging.
+
+12/15: All unit tests written.
+
+12/20: Report drafts finished.
+
+12/22: Project is done!
+
+
+\subsection{Roles and Responsibilities}
+All members of the team helped write the OCaml code for this project and prepare Next test cases. \\  
+
+\textbf{Project Leader: Morgan} - divided jobs among team members, arbitrated disagreements about language elements, put together the written reports, wrote the implementation for selection statements (if, choose, prob), and much of the supporting Java code. \\
+
+\textbf{Language Guru: Ernesto} - primary source of ideas for our language and what it should do, wrote scanner, wrote implementation of start statements and action statements (kill, grab, drop, show, hide), wrote the larger sample Next programs. \\
+
+\textbf{IT Support: Danny} - managed our Github repository, set up automation for test scripts, wrote the implementation of declarations and expressions. \\
+
+\textbf{AST Expert: Xiao} - wrote much of the parser, go-to person for problem with the parser or AST, wrote code to do type-checking on AST, wrote implementation of compound statements and output statements. \\
+
+
+\subsection{Software Development Environment}
+Our translator was written using OCaml.   We used ocamllex and ocamlyacc to create the scanner and parser, respectively.  Code was developed in text files and compiled at the command line with a make file.  Since our compiler translates code into Java, we also used the Java compiler and JVM to run our programs.  Source control was done via Github.
+
+\section{Architectural Design}
+\subsection{Architecture Block Diagram}
+The Next compiler consists of the following major components:
+\begin{enumerate}\item Scanner (implemented using Ocamllex) \\Scans the input source file and generates tokens\item Parser (implemented using Ocamlyacc)\\Parse the tokens from the scanner and generates concrete syntax tree (CST) for the given source program\item Semantic and type checking module\\Checks the CST for semantic or type errors and also builds up a symbol table\item Java library code\\Necessary Java class, function and method that’s included in the final output java code\item Java code generator\\Translates the CST to java code and appends the Java library code to the final output
+\end{enumerate}
+
+The interaction of these components is shown in figure~\ref{diagram}. The Next compiler takes a Next Source File (conventionally suffixed by .Next) and feeds it to the Next scanner implemented using Ocamllex. The scanner captures the input source file, generates a token stream and passes it to the parser. On receiving the token stream, the parser checks the syntax and builds up the concrete syntax tree. The generated concrete syntax tree is first fed to the checking module to detect any semantic or type errors. During this checking pass, a symbol table is built up as well. After the checking pass, the Java code generator picks up the symbol table, goes through the concrete syntax tree again and translates the CST to java code. In the final stage, the necessary library code is included in the final output java file by the java code generator as well.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=1.0]{diagram.png}
+\caption{Block diagram of Next compiler}
+\label{diagram}
+\end{center}
+\end{figure}
+
+\subsection{Interfaces Description}
+\begin{enumerate}
+\item Scanner \\Scanner has one public interface which takes an input from the stdin and returns a token stream. If any invalid token is captured, an exception will be raised\item Parser\\Parser has one public interface which takes the token stream from the scanner as input and returns the generated CST. If any syntax error is captured, a parsing exception will be raised.\item Semantic and type checking module\\This checking module has one major public interface which takes the CST generated by the parser and returns a symbol table.  Also this module provides several query functions for the Java code generator to call to determine the type of variables or expressions. Namely,Check\_id function takes in an identifier in the CST together with the symbol table and returns the type of the identifier. \\Check\_expr function takes in an expression in Next and returns the type of the expressionThese functions are called by the Java code generator to when it’s necessary to know the type of the expression or identifier.\item Java code generator \\The code generator provides one public interface which takes the symbol table and the CST and output the final java code to stdout. The code generator calls the check\_id and check\_expr functions provided by the checking module when the type information about a specific identifier or expression is need.
+\end{enumerate}
+
+\section{Test Plan}
+Tests were first created to cover all aspects of the LRM.  The LRM was split up into 4 parts and each member wrote tests that covered aspects of the Next language that was discussed in the portion of the LRM that was assigned to them.  These tests were automated using a Perl script (RunTests.pl) which first ran the Next compiler on the Next test code, second compiled the resulting Java code, third ran the Java program, and last compared the output of the Java program with a reference file.  If any tests failed, this was recorded in a log file.  Because the Next language allows the developer to create programs that are non-deterministic through manual input or through the use of probability, we decided to test these aspects of the Next language manually.
+
+\section{Lessons Learned}
+\subsection{Ernesto}
+\subsection{Danny}
+\paragraph{1.	Pick a source control you are comfortable with.  }I proposed to the group that we use Git as our source control program.  Although learning a new source control seemed exciting and like a great idea at the time, if I had to do it again, I would have picked SVN or CVS.  The reason being is that Git worked for us most of the time but when things went wrong, such as a merge, it was very frustrating and time consuming figuring out how to fix it.  There were a couple of times where I lost work because of some mix-up.  Time lost figuring out Git could have been used better elsewhere.\paragraph{2.	Set Goals}Our group had a Google Calendar that we setup early in the semester with weekly meeting times as well milestones that we wanted to hit.  We did not always hit our milestones, for example being code complete by Thanksgiving, but it did provide a sense of where we were compared to where we wanted to be.  This translated into us working harder in order to stay on schedule so we would not be dealing with a waterfall of work in the last week.\paragraph{3.	Meet Regularly (In person or electronically)}I think this was the main reason that made our group as efficient as it was.  Regular meetings allowed us to clarify and refine our language and make incremental changes as we went along as opposed to changing the whole architecture of our language every 2-3 weeks.  This also helped to keep everybody accountable since it is hard not to do any work when everybody else has something to show every couple days.  
+
+\subsection{Morgan}
+
+
+\subsection{Xiaowei}
+
+\section{Appendix}
+Attached to the end of this report is a complete code listing of our translator.
 
 
 \end{document}
