@@ -21,38 +21,30 @@
 \tableofcontents
 
 \section{Introduction}
-The Next programming language provides a way to easily create text-based computer games.  Users of the language can specify characters, locations and items that will appear in the game, and they can design the general plot of the game that ties these together.  This language is ideal for creating text-based RPGs (or digital ``choose your own adventure" stories), but it can also be used to design other types of games.
+The Next programming language provides a way to easily create text-based computer games.  Users of the language can specify characters, locations and items that will appear in the game, and they can design the general plot of the game that ties these together.  This language is ideal for creating text-based RPGs (or digital ``choose your own adventure" stories).
 
 \subsection{Language Elements}
 
-\subsubsection{Declarations}
-The program is primarily structured around declarations.  The user will create declarations for characters, locations, items, missions, and attributes.
-
-\paragraph{Characters}
-Characters can appear in locations throughout the game.  A declaration for a character will provide the character's name and valid interactions for this character, such as \textit{attack} or \textit{converse}.
-
-\paragraph{Locations}
-Locations provide a basic map of the game's landscape.  These are the ``rooms" in which a game player can find characters to interact with, items to pick up, or options for actions.  Locations can be nested; for instance, one might want to declare a location ``castle" with nested sub-locations ``dungeon" or ``tower."  The game player moves through locations during the game, and is presented with a list of options at each of these locations.  This serves also to define the basic plot of the game.  Within each location declaration, the possible actions are listed, as well as the result of taking these actions.  Results for action can include moving into a different location, changing attribute values for characters, or displaying new text on the screen.  It is possible to attach probabilities to each possible result of an action, to incorporate some randomness into the game.
-
-One location needs to be specified as the ``starting'' location for the game; this defines where all game play will begin.
-
-\paragraph{Actions}
-Actions can serve to move the character from location to location, or they can provide the ways to interact with other characters and items in the game.  For instance, there could be actions to move, attack, defend, pick up objects, or talk with other characters.  Creating actions for different directions in the game (\textit{up}, \textit{down}, \textit{left}, and \textit{right}) will allow programmers to create games beyond a basic RPG and into the realm of fighting games or driving games.
+\paragraph{Declarations}
+The program is primarily structured around declarations.  The user will create declarations for characters, locations, items, and attributes.
 
 \paragraph{Items}
-Items are objects that the game player can pick up and maintain in their inventory.  Collecting items can be requirements for missions, or possessing an item might improve a certain attribute such as strength or speed.
+Items are objects that the game player can pick up and maintain in their inventory, and which can be contained in locations.  The player could be required to collect item, or he might need a certain item to perform certain actions.
 
-\paragraph{Missions}
-A mission is a collection of requirements.  When all requirements in the mission declaration are completed, the game player earns a completion of the mission.  The requirements can include collecting items, visiting locations, performing certain actions, or meeting certain characters.  Missions can then be used as a way to define when the game level should increase.
+\paragraph{Characters}
+Characters can appear in locations throughout the game.  A declaration for a character will provide the character's name, items he holds, and attribute values.
 
-\paragraph{Attributes}
-Attributes are characteristics such as strength or speed, which each character in the game possesses, including the main player.  Attributes can vary throughout the game, and may be used in conditional statements in a ``location'' declaration to define what the result of an action should be.  For instance, if an attribute ``strength" is high, a user may want to define a higher probability of successfully defeating an enemy.
+\paragraph{Locations}
+Locations provide a basic map of the game's landscape.  These are the ``rooms" in which a game player can find characters to interact with, items to pick up, or options for actions.   For each location in the game, there are two types of declarations.  It has a regular declaration, similar to a character declaration, in which its name is declared, as well as items found in that location, characters found in that location, and attributes of the location.  Each location also mandatorily has an associated "start statement" which defines what gameplay will take place in that location.  This start statement can contain any of the allowable statements in the language.
 
-\subsubsection{Levels}
-Our language will also provide a way to handle levels of a game, if desired.  The user will be able to decide whether they want to use levels in their game, and what criteria to use for ``leveling up."  Examples for level-up criteria could be thresholds for number of missions completed, number of locations visited, number of characters interacted with, etc.  Attributes such as strength or speed can be enhanced when a player passes a level, to provide some incentive.
+\paragraph{Actions}
+The way a player can interact with the game to make choices regarding gameplay is by selecting from various "actions."  The programmer defines a list of possible actions, and the code that will be executed when each action is chosen.  This is what allows the players to control the plot of the game.
 
-\subsubsection{Basic Math}
-Our language will need to provide the tools for performing basic math, such as addition, subtraction, and boolean operations.  These will be needed to handle increasing the level, updating the numerical features of attributes, or examining features of attributes for conditional results for actions.
+\paragraph{Randomness}
+A key element of a language designed to create games is some element of randomness, so the gameplay will not be entirely predictable.  This is implemented in our language through probability statements, a form of selection statement in which each option is assigned a probability , and the option to be executed is chosen according to what number is returned by a random number generator.
+
+\paragraph{Basic Math}
+Our language provides the tools for performing basic math, such as addition, subtraction, and boolean operations.  These can be used to declare additional variables, update the values of attributes, examining features of attributes for conditional results for actions, or anything else the programmer can think of to make use of them.
 
 \section{Language Tutorial}
 \subsection{Tutorial 1}
@@ -734,8 +726,11 @@ As the translator code neared completion, we also began work on the testing of o
 Throughout the work on our project, we had biweekly meetings to make sure everyone was on the same page and work through issues that required whole-group input.
 
 \subsection{Programming Style Guide}
-For our OCaml style guide, we referred to the style guide used in programming classes at Cornell, which is described at: \\
-http://www.cs.cornell.edu/courses/cs3110/2009fa/handouts/style.htm
+\subsubsection{Width of the page }80 characters Column Limit 
+\subsubsection{Height of the page}A function should always fit one screenful (of about 70 lines) , at most three\subsubsection{Using tab stops}No Tab Characters  is allowed\subsubsection{Comments }Comments Go Above the Code They Reference\subsubsection{Indentation}The change in indentation between successive lines of the program is 2 spaces\paragraph{indent let ... in constructs}The expression following a definition introduced by let is indented to the same level as the keyword let, and the keyword in which introduces it is written at the end\paragraph{indent if ... then ... else ... }
+\begin{verbatim}if cond1 … thenelse if cond2 … thenelse if cond3 … then
+\end{verbatim}\paragraph{indent pattern-matching}All the pattern-matching clauses are introduced by a vertical bar, including the first one. For a match or a try align the clauses with the beginning of the construct. If the expression on the right of the pattern matching arrow is too large, cut the line after the arrow.
+For Pattern matching in named functions. Indent the clauses 2 spaces with respect to the beginning of the construct
 
 \subsection{Project timeline}
 We kept a calendar to keep track of the important dates for this project. \\
@@ -797,14 +792,26 @@ The interaction of these components is shown in figure~\ref{diagram}. The Next c
 Tests were first created to cover all aspects of the LRM.  The LRM was split up into 4 parts and each member wrote tests that covered aspects of the Next language that was discussed in the portion of the LRM that was assigned to them.  These tests were automated using a Perl script (RunTests.pl) which first ran the Next compiler on the Next test code, second compiled the resulting Java code, third ran the Java program, and last compared the output of the Java program with a reference file.  If any tests failed, this was recorded in a log file.  Because the Next language allows the developer to create programs that are non-deterministic through manual input or through the use of probability, we decided to test these aspects of the Next language manually.
 
 \section{Lessons Learned}
+
 \subsection{Ernesto}
+	This semester was filled with lots of lessons to be learned in PLT. It was interesting to see how while creating our language, every time we hit a stumbling block on the creation of our AST the solution was to create a new type that took the other elements of the language bellow it (another level of indirection). In general just learning about tokens and how languages work changed my way of looking at programming. It was exciting to see how expressions resolve and become statements to go on into declarations (at least for the language my team created). I also learned about the many considerations that go into making a programming language such as scope, syntax and structure. Specifically for the language we created I learned about flexibility. Our language would have been a lot more flexible and intuitive if we had used smaller statements such as separating the next statement from the when statement.  It is true that less is better in this case. It was also interesting to see how programming languages currently seem to be set to work in certain typical ways but really, they can be organized and made to work in any way as long as a language is well defined. It leaves a lot of room for creativity.
+		Regarding team work I learned that having strong and involved team members and a person with the ultimate word really helps. Disputes are resolved with a lot more ease if one person has the last say. It is a lot more efficient. 
+		Regarding development I learned that O’caml is a fantastic language when it comes to creating programming languages because of its strong data type system and the way its functions are created and used. At the same time I learned about the weaknesses of trying to port a language that uses integer values to express true/false to a language that uses Boolean values. Expressions can become quite complex to handle.
+		For students next semester I would agree that it is definitely good to start early, especially on the details of the language. My team had the parser, scanner and AST done within a month and it gave us a lot of room to think about what we had and tweak decisions with something to fall back on rather than finding out last minute something is terribly wrong. Also a system of checks I would say helps. Have someone specialize on a certain part of the report but have someone else overview and understand what is happening. This helps for decisions to get a second opinion for debugging and error checking and when the rest of the tea does not understand something the expert is usually too immersed on the material to be able to explain things well but a person who understands but is not so impregnated is able to clarify concepts in “lay-mans terms”. 
+
 \subsection{Danny}
 \paragraph{1.	Pick a source control you are comfortable with.  }I proposed to the group that we use Git as our source control program.  Although learning a new source control seemed exciting and like a great idea at the time, if I had to do it again, I would have picked SVN or CVS.  The reason being is that Git worked for us most of the time but when things went wrong, such as a merge, it was very frustrating and time consuming figuring out how to fix it.  There were a couple of times where I lost work because of some mix-up.  Time lost figuring out Git could have been used better elsewhere.\paragraph{2.	Set Goals}Our group had a Google Calendar that we setup early in the semester with weekly meeting times as well milestones that we wanted to hit.  We did not always hit our milestones, for example being code complete by Thanksgiving, but it did provide a sense of where we were compared to where we wanted to be.  This translated into us working harder in order to stay on schedule so we would not be dealing with a waterfall of work in the last week.\paragraph{3.	Meet Regularly (In person or electronically)}I think this was the main reason that made our group as efficient as it was.  Regular meetings allowed us to clarify and refine our language and make incremental changes as we went along as opposed to changing the whole architecture of our language every 2-3 weeks.  This also helped to keep everybody accountable since it is hard not to do any work when everybody else has something to show every couple days.  
 
 \subsection{Morgan}
+It really helps to very specifically designate jobs and responsibilities to each person.  This ensures that everyone is clear on what they should be doing, and it helps the work get done more efficiently.  It is also useful when it comes to debugging and fixing errors in the code to know exactly who was responsible for that section, so that someone familiar with the design of that section can be the expert on fixing that problem. 
+
+Communication is also key.  Our group met twice a week to discuss our project and work on issues that had come up.  This system made sure that everyone was always on the same page in regard to the project.  We also communicated frequently via email as problems came up, which was also effective as all members of our group responded quickly to emails.
+
+Our project ran very smoothly overall, so I think that the systems we had in place worked well.  It also helps if all members of the group have a good work ethic and are responsible in completing tasks, which we were lucky in having as well.
 
 
 \subsection{Xiaowei}
+Communication is very important, especially in a collaborative project like this. It really takes time for everyone to understand each other (ambiguous in language might be the cause, need a better parser). Source control is another important thing. If we don’t have the source control, I can imagine what a mess it is going to be. 
 
 \section{Appendix}
 Attached to the end of this report is a complete code listing of our translator.
