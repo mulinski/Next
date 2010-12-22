@@ -1,3 +1,5 @@
+/*ProfEdwardsAdventure.next by Ernesto */
+
 item laser{(string color = "Green", int damage = 10)}
 item PDP_8{(int memory = 10)}
 item not_windows_computer {(string OS = "Not-Windows")}

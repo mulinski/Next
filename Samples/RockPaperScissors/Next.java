@@ -1,4 +1,4 @@
-
+//Generated Next.java file for RockPaperScissors.Next
 import java.util.*;
 
 public class Next {

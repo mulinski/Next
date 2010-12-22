@@ -1,0 +1,17 @@
+/*PresentationTutorial.next by Ernesto */
+
+int fin;
+
+item  object {(int size=3)}
+
+character person {(string say ="Hello World!"),(object)}
+
+location here{( ),(object),(person)}
+
+start here end (fin == 1){
+	if (exists here.object) then 
+		output person.say;
+	else
+		output object.size;
+	fin = 1;
+}

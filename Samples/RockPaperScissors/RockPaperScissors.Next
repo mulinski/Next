@@ -1,3 +1,5 @@
+/*RockPaperScissors.next by Ernesto */
+
 int won;
 int lost;
 

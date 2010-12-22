@@ -1,4 +1,4 @@
-
+//Next.java file generated for ProfEdwardsAdventure.next
 import java.util.*;
 
 public class Next {

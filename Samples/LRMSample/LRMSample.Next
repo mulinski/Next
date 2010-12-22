@@ -1,3 +1,5 @@
+/*LRMSample.next by Ernesto Arreguin */
+
 int count;
 
 item the_greatest_sword_ever {(int damage = 100000000)}

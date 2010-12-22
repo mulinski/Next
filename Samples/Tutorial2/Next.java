@@ -1,4 +1,4 @@
-
+//Next.java file generated for Tutorial2.next
 import java.util.*;
 
 public class Next {
